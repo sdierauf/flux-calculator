@@ -22,7 +22,7 @@ var NumberButton = React.createClass({
 	},
 
 	_onNumberClick: function() {
-		CalcActions.pushNumOnStack(this.props.number);
+		CalcActions.addToDisplay(this.props.number);
 	}
 
 });

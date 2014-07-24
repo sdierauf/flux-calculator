@@ -21,10 +21,13 @@ var StackDisplay = React.createClass({
 			console.log('building stack display');
 			console.log(stack[key])
 			stackNums.push(<StackDisplayItem stackItem={stack[key]} />)
-		}
+		};
 
 		return (
-			<ul>{stackNums}</ul>
+			<div>
+				<h2>The Stack:</h2>
+				<ul>{stackNums}</ul>
+			</div>
 		);
 
 	}

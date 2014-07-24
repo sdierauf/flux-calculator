@@ -12,7 +12,7 @@ var NumPad = React.createClass({
 
 		var buttons = [];
 
-		for (var i = 9; i > 0; i--) {
+		for (var i = 9; i > -1; i--) {
 			buttons.push(<NumberButton number={i} />);
 		};
 

@@ -5,7 +5,7 @@ var merge = require('react/lib/merge');
 
 var CHANGE_EVENT = 'change';
 
-var _stack = {};
+var _stack = [];
 var _result = 0;
 
 function pushNum(number) {
@@ -16,6 +16,56 @@ function pushNum(number) {
 }
 
 function popNum() {
+
+}
+
+function pushResult() {
+	var id = Date.now();
+	_stack.push({
+		key: id,
+		number: _result
+	});
+}
+
+function clearResult() {
+	_result = 0;
+}
+
+function appendToResult(number) {
+	_result = _result * 10 + number;
+}
+
+function doMath(op) {
+	var stackTop = _stack.pop();
+	if (typeof stackTop == 'undefined') {
+		_result = _result;
+		return;
+	} else {
+		stackTop = stackTop.number;
+	}
+	// console.log(stackTop)
+	// _result = stackTop.number;
+	switch(op) {
+
+		case '+':
+			_result = _result + stackTop;
+			break;
+
+		case '-':
+			_result = _result - stackTop;
+			break;
+
+		case '*':
+			_result = _result * stackTop;
+			break;
+
+		case '/' :
+			_result = _result / stackTop;
+			break;
+
+		default:
+			_result = 0;
+	};
 
 }
 
@@ -60,6 +110,24 @@ CalcDispatcher.register(function(payload) {
 			pushNum(number);
 			break;
 
+		case CalcConstants.ADD_TO_DISPLAY:
+			number = action.number
+			console.log('adding nubmer to display ' + number);
+			appendToResult(number);
+			break;
+
+		case CalcConstants.PUSH_RESULT:
+			pushResult();
+			break;
+
+		case CalcConstants.CLEAR_RESULT:
+			console.log('cleared!');
+			clearResult();
+			break;
+
+		case CalcConstants.DO_MATH: 
+			doMath(action.operator);
+			break;
 
 		default: 
 			console.log('fell through to default');
