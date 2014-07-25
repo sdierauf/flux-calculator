@@ -21,8 +21,6 @@ function getCalcState() {
 
 var CalcApp = React.createClass({
 
-	//need access to stack of numbers
-
 	getInitialState: function() {
 		return getCalcState();
 	},
