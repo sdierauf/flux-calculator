@@ -6,17 +6,17 @@ var merge = require('react/lib/merge');
 var CHANGE_EVENT = 'change';
 
 var _stack = [];
-var _result = 0;
+var _result = '';
 
-function pushNum(number) {
-	var key = Date.now();
-	_stack[key] = {
-		number: number
-	};
-}
-
-function popNum() {
-
+function pushNum(result) {
+	var number = parseFloat(result);
+	var id = Date.now();
+	if (number) {
+		_stack.push({
+			key: id,
+			number: number
+		});
+	}	
 }
 
 function pushResult() {
@@ -27,8 +27,8 @@ function pushResult() {
 	});
 }
 
-function clearResult() {
-	_result = 0;
+function setResult(keyCode) {
+	_result = keyCode;
 }
 
 function appendToResult(number) {
@@ -40,27 +40,30 @@ function doMath(op) {
 	if (typeof stackTop == 'undefined') {
 		_result = _result;
 		return;
-	} else {
-		stackTop = stackTop.number;
+	}
+
+	if (!parseFloat(_result)) {
+		_result = stackTop.number;
+		return;
 	}
 	// console.log(stackTop)
 	// _result = stackTop.number;
 	switch(op) {
 
 		case '+':
-			_result = _result + stackTop;
+			_result = _result + stackTop.number;
 			break;
 
 		case '-':
-			_result = _result - stackTop;
+			_result = _result - stackTop.number;
 			break;
 
 		case '*':
-			_result = _result * stackTop;
+			_result = _result * stackTop.number;
 			break;
 
 		case '/' :
-			_result = _result / stackTop;
+			_result = _result / stackTop.number;
 			break;
 
 		default:
@@ -117,7 +120,7 @@ CalcDispatcher.register(function(payload) {
 			break;
 
 		case CalcConstants.PUSH_RESULT:
-			pushResult();
+			pushNum(action.result);
 			break;
 
 		case CalcConstants.CLEAR_RESULT:
@@ -127,6 +130,10 @@ CalcDispatcher.register(function(payload) {
 
 		case CalcConstants.DO_MATH: 
 			doMath(action.operator);
+			break;
+
+		case CalcConstants.EDIT_RESULT:
+			setResult(action.keyCode);
 			break;
 
 		default: 

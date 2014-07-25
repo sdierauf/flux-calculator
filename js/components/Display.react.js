@@ -4,22 +4,17 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var CalcActions = require('../actions/CalcActions');
 
-var Display = React.createClass({
-
-	// propTypes: {
-	// 	result: ReactPropTypes.double.isRequired
-	// },
+var Display = React.createClass( {
 
 	render: function() {
 
 		return (
-			<input
-				id="result-display"
-				type="text"
-				value={this.props.result} />
-		)
+			<div id="display">
+				<p>Output: {this.props.output} </p>
+			</div>
+		);
 	}
-
 });
+
 
 module.exports = Display;

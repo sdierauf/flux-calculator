@@ -5,5 +5,6 @@ module.exports = keyMirror({
 	ADD_TO_DISPLAY: null,
 	PUSH_RESULT: null,
 	CLEAR_RESULT: null,
-	DO_MATH: null
+	DO_MATH: null,
+	EDIT_RESULT: null
 });

@@ -17,9 +17,10 @@ var CalcActions = {
 		});
 	},
 
-	pushResultOnStack: function() {
+	pushResultOnStack: function(result) {
 		CalcDispatcher.handleViewAction({
-			actionType: CalcConstants.PUSH_RESULT
+			actionType: CalcConstants.PUSH_RESULT,
+			result: result
 		});
 	},
 
@@ -31,8 +32,15 @@ var CalcActions = {
 
 	doMath: function(operator) {
 		CalcDispatcher.handleViewAction({
-			actionType:CalcConstants.DO_MATH,
+			actionType: CalcConstants.DO_MATH,
 			operator: operator
+		});
+	},
+
+	editResult: function(keyCode) {
+		CalcDispatcher.handleViewAction({
+			actionType: CalcConstants.EDIT_RESULT,
+			keyCode: keyCode
 		});
 	}
 

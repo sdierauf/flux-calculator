@@ -4,6 +4,7 @@ var React = require('react');
 
 
 var Display = require('./Display.react');
+var Input = require('./Input.react.js');
 var NumPad = require('./NumPad.react');
 var PushButton = require('./PushButton.react');
 var Mutators = require('./Mutators.react');
@@ -36,14 +37,14 @@ var CalcApp = React.createClass({
 
 	render: function() {
 		return (
-			<div>
-				<Display 
-					result={this.state.result} />
-				<NumPad />
-				<PushButton />
-				<Mutators />
+			<div id="calculator">
 				<StackDisplay 
 					stack={this.state.stack} />
+				<Display 
+					output={this.state.result} />
+				<Input />
+				<PushButton />
+				<Mutators />
 			</div>
 
 		);
