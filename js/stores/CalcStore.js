@@ -27,27 +27,23 @@ function pushResult() {
 	});
 }
 
-function setResult(keyCode) {
-	_result = keyCode;
-}
-
-function appendToResult(number) {
-	_result = _result * 10 + number;
-}
-
 function doMath(op) {
+	
 	var stackTop = _stack.pop();
+
+	//if the stack is empty, just leave the result as is
 	if (typeof stackTop == 'undefined') {
 		_result = _result;
 		return;
 	}
 
+	//if the result is not a real number, can't do any ops
+	//so just set the number to the first number off the stack
 	if (!parseFloat(_result)) {
 		_result = stackTop.number;
 		return;
 	}
-	// console.log(stackTop)
-	// _result = stackTop.number;
+
 	switch(op) {
 
 		case '+':
@@ -96,7 +92,6 @@ var CalcStore = merge(EventEmitter.prototype,  {
 
 });
 
-
 CalcDispatcher.register(function(payload) {
 
 	var action = payload.action;
@@ -113,27 +108,12 @@ CalcDispatcher.register(function(payload) {
 			pushNum(number);
 			break;
 
-		case CalcConstants.ADD_TO_DISPLAY:
-			number = action.number
-			console.log('adding nubmer to display ' + number);
-			appendToResult(number);
-			break;
-
 		case CalcConstants.PUSH_RESULT:
 			pushNum(action.result);
 			break;
 
-		case CalcConstants.CLEAR_RESULT:
-			console.log('cleared!');
-			clearResult();
-			break;
-
 		case CalcConstants.DO_MATH: 
 			doMath(action.operator);
-			break;
-
-		case CalcConstants.EDIT_RESULT:
-			setResult(action.keyCode);
 			break;
 
 		default: 
